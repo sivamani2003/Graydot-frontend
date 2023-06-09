@@ -9,6 +9,74 @@
             box-sizing: border-box;
             font-family: 'Poppins';
         }
+        body{
+            background-color: #0b0423;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #0b0423;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #left,
+        #right {
+            width: 300px;
+            min-height: 400px;
+            margin: 20px;
+            border: 2px dashed #fff;
+        }
+
+        .list {
+            background: #e91e63;
+            height: 60px;
+            margin: 30px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            cursor: grab;
+            transition: background-color 0.3s ease, opacity 0.3s ease;
+        }
+
+        .list img {
+            width: 20px;
+            margin-right: 15px;
+            margin-left: 20px;
+        }
+
+        .list.dragging {
+            opacity: 1;
+            background-color: #e91e63;
+        }
+
+        .highlight {
+            border-color: yellow;
+        }
+
+
+        .reset-button {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .reset-button button {
+            padding: 10px 20px;
+            background-color: #e91e63;
+            color: #fff;
+            border: none;
+            outline: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        
     </style>
 </head>
 
@@ -29,6 +97,40 @@
             <button onclick="resetContainers()">Reset</button>
         </div>
     </div>
+    <script>
+        let leftLists = document.querySelectorAll("#left .list");
+        let rightBox = document.getElementById("right");
+        let leftBox = document.getElementById("left");
+        let selected = null;
+        let canDragLeft = true;
+        let successMessageTimeout;
+        for (let list of leftLists) {
+            list.addEventListener("dragstart", function (e) {
+                if (canDragLeft) {
+                    selected = e.target;
+                    selected.classList.add("dragging");
+                }
+            });
+
+            list.addEventListener("dragend", function (e) {
+                if (selected) {
+                    selected.classList.remove("dragging");
+                    selected = null;
+                }
+            });
+        }
+        rightBox.addEventListener("dragover", function (e) {
+            e.preventDefault();
+        });
+
+        rightBox.addEventListener("dragenter", function (e) {
+            rightBox.classList.add("highlight");
+        });
+
+        rightBox.addEventListener("dragleave", function (e) {
+            rightBox.classList.remove("highlight");
+        });
+    </script>
 </body>
 
 </html>
