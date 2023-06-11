@@ -51,7 +51,7 @@ rightBox.addEventListener("drop", function (e) {
         const clone = selected.cloneNode(true);
         rightBox.appendChild(clone);
         selected = null;
-        showMessage("Item moved added successfully");
+        showMessage("Item added successfully");
     }
 });
 
